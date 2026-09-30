@@ -15,8 +15,7 @@ label is not graded.
 
 **GitHub username**
 
-[Your GitHub username, exactly as it appears on your profile — no `@`, no profile URL. Your
-comments upstream are identified by this name.]
+olivertang40
 
 ---
 
@@ -24,16 +23,87 @@ comments upstream are identified by this name.]
 
 **Claim comment**
 
-[Link to the comment where you claimed the issue. Use the comment's own permalink, not the
-issue page on its own. **Then paste the text of that comment underneath the link** — the
-pasted text is what this field is graded on, so copy across what you actually posted.]
+[Claim comment permalink](https://github.com/codepath/pathreview-ai301-fa26-s1/issues/73#issuecomment-5918707336)
+
+I'd like to pick this up as my first contribution to PathReview.
+
+Reading the current files on `main`, the disagreement looks like this:
+
+- `README.md`'s Quick Start has `# Configure environment (add your OPENROUTER_API_KEY to .env)` on the line directly above `cp .env.example .env`.
+- `.env.example` has no `OPENROUTER_API_KEY` entry, and its provider comment reads `# Options: "mock" (default, no API key needed), "openai"`.
+- `core/config.py` defines `openrouter_api_key`, `openrouter_base_url` and `openrouter_model` next to `openai_api_key`, so the setting does exist in code.
+
+My next step is to set the project up from its own docs on Windows via Git Bash, follow the Quick Start exactly as written, and see what a new contributor actually ends up with in `.env` and which `LLM_PROVIDER` values the config will accept. I have not run the setup yet, so I am not claiming a cause here, and I would rather not guess at which of the two files is the one that should move until I have seen it run.
+
+I will post a reproduction report on this issue with the environment and the steps I used before I propose any change, including if it turns out the files already line up once the setup is done.
 
 **Reproduction comment**
 
-[Link to the comment where you posted your reproduction. It must record the environment
-(OS, relevant versions, code state), steps a stranger could follow, and what you observed.
-**Then paste the text of that comment underneath the link** — the pasted text is what this
-field is graded on, so copy across what you actually posted.]
+[Reproduction comment permalink](https://github.com/codepath/pathreview-ai301-fa26-s1/issues/73#issuecomment-5918700667)
+
+Hi, I reproduced the documentation mismatch on a fresh local checkout of the cohort repository at commit `f89c06fc3ff292df2a04a39ac51319d32a76b779`.
+
+**Environment**
+
+- OS: Windows 11, build 10.0.26200.9168
+- Shell: Windows PowerShell 5.1.26100.9168
+- Git: 2.54.0.windows.1
+- Repository: `codepath/pathreview-ai301-fa26-s1`, official cohort repository checkout at `f89c06fc3ff292df2a04a39ac51319d32a76b779` (2026-09-16). This was a local checkout of the cohort repository, not a personal fork.
+
+I inspected the setup files directly. I did not run Docker, `make setup`, or the application because this issue is about inconsistent documentation and environment-template contents; runtime behavior is not needed to observe the mismatch.
+
+**Steps I followed**
+
+From the repository checkout, I ran:
+
+```powershell
+git log -1 --format="%H %ad" --date=short
+git --version
+git grep -n "OPENROUTER_API_KEY" HEAD -- README.md docs/SETUP.md
+Copy-Item .env.example .env.repro
+@(Select-String -Path .env.repro -Pattern "OPENROUTER_API_KEY").Count
+Select-String -Path .env.repro -Pattern "^# LLM provider|^# Options|^LLM_PROVIDER=|^OPENAI_API_KEY="
+git grep -n -E "llm_provider|openai_api_key|openrouter_api_key|openrouter_base_url|openrouter_model" HEAD -- core/config.py
+```
+
+**Observed output**
+
+The checkout reported:
+
+```text
+f89c06fc3ff292df2a04a39ac51319d32a76b779 2026-09-16
+git version 2.54.0.windows.1
+```
+
+Both setup documents name the key:
+
+```text
+README.md:24:# Configure environment (add your OPENROUTER_API_KEY to .env)
+docs/SETUP.md:47:# Edit .env and set your OPENROUTER_API_KEY (required for AI features)
+```
+
+After I copied `.env.example` to `.env.repro`, the key search returned `0`. The provider section in the copied file was:
+
+```text
+# LLM provider
+# Options: "mock" (default, no API key needed), "openai"
+LLM_PROVIDER=mock
+OPENAI_API_KEY=sk-your-key-here
+```
+
+The configuration declares the OpenRouter fields:
+
+```text
+core/config.py:18:    llm_provider: str = Field(default="mock")
+core/config.py:19:    openai_api_key: str = Field(default="")
+core/config.py:20:    openrouter_api_key: str = Field(default="")
+core/config.py:21:    openrouter_base_url: str = Field(default="https://openrouter.ai/api/v1")
+core/config.py:22:    openrouter_model: str = Field(default="google/gemma-3-27b-it:free")
+```
+
+**Conclusion**
+
+I confirmed the mismatch described in issue #73: both `README.md` and `docs/SETUP.md` tell me to set `OPENROUTER_API_KEY`, but the copied `.env.example` has no such entry and lists only `mock` and `openai` in its provider comment. `core/config.py` does declare `openrouter_api_key`. I did not test whether the application uses OpenRouter at runtime, so I am not claiming runtime support or failure.
 
 ## Eval iterations
 
