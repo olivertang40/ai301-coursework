@@ -15,15 +15,12 @@ label is not graded.
 
 **Pull request**
 
-[Link to the pull request you opened. It must be the pull request's own page on the Path
-Review repo, not your fork's branch page.]
+Pending — no issue-specific pull request has been opened yet.
 
 **Branch**
 
-[The name of the branch the pull request comes from, exactly as it appears in your fork.
-The naming shape is a type prefix, then the issue number, then a short description. **The
-issue number in the branch name must be the number of the issue the pull request fixes** —
-a name carrying any other number does not satisfy this field.]
+Pending — `unit4/pr-precheck-progress` is only the coursework tracking
+branch, not an issue-fix branch for Path Review.
 
 ## Eval iterations
 
@@ -32,28 +29,58 @@ fields.
 
 **Run history**
 
-[The agreement score of each run you did, in order. A single run is a complete answer if
-only one run occurred. **The last score in your list must match the agreement line in the
-`eval-run.txt` you committed** — that file is the record of your final run.]
+1. The first full run agreed on **19/20** (category floor passed); the
+   Windows console encoding error required rerunning with UTF-8 mode.
+2. Regraded `pkg-19` with `--only`: **0/1** agreed.
+3. Regraded `pkg-19,pkg-02` as the clear-accept canary run: **2/2**
+   agreed.
+4. Final full confirmation: **20/20** agreed; categories were
+   clear-accept 7/7, not-tested 4/4, silent-drift 4/4,
+   standards-wall 2/2, unreviewable 3/3. This matches the final
+   harness-generated `eval-run.txt`.
 
 **Package analysis**
 
-[Pick one scored package (`pkg-01` through `pkg-20` — the four `calib-` packages are never
-scored). Name it by id, say what your rubric decided and what the gold label said, and
-explain why your rubric read it that way.]
+`pkg-19`: the first full run's rubric verdict was **reject**, while the
+gold label was **accept**. The test-evidence check failed because the
+planned controls were reported as unchanged without separate output
+transcripts, even though the issue repro had observable before/after
+output and `go test ./...` passed. I revised the check to accept
+reported control outcomes when the primary repro and relevant suite
+results are observable; the targeted rerun and final full run both
+graded `pkg-19` **accept**.
 
 **Check rationale**
 
-[Quote one check from the `rubric.md` you uploaded to `tools/pr-precheck/`, exactly as it reads now.
-Then say why it reads that way — what you revised to get there, or what you rejected in
-favour of it.]
+> Not tested — test evidence | Compare `test_evidence.md` (or the
+> bundle's test-evidence section) with the plan's test plan and repro
+> steps; verify that outputs identify what ran and what happened,
+> including each applicable repository check and its result. |
+> Evidence makes the primary before/after repro behavior and expected
+> outcome observable and reports test/check outcomes truthfully,
+> including failures or an expected no-tests result with its reason.
+> For planned control cases, an explicit reported outcome (such as
+> "unchanged") is sufficient when the primary repro and relevant
+> suite results are observable; do not demand a separate transcript
+> for every control. A claim such as "tests pass" without results, a
+> planned primary check with no evidence or explanation, or a test
+> unrelated to the planned behavior fails. A reported failure is
+> evidence, not proof of a pass; apply repository policy to its
+> outcome in the standards check. | required
+
+I revised this condition after `pkg-19` exposed an overly strict
+requirement: controls were explicitly reported unchanged, while the
+main repro and full suite results were visible. The revision prevents
+that paperwork gap from outweighing observable evidence, without
+accepting an unsupported primary test claim.
 
 **Trade-offs**
 
-[Every check gives something up. Any one of these is a complete answer: a package whose
-result it changes, a canary you re-ran with `--only`, a case you accept it will miss, or a
-stated reason nothing changed elsewhere. "Nothing changed, and here is how I know" earns
-the point in full when the reason follows.]
+This revision changes `pkg-19` from reject to accept. I reran the
+already-agreeing clear-accept `pkg-02` as a canary with `--only`;
+it remained accept. The test check still requires observable primary
+before/after behavior and relevant suite results, so a summary of
+controls cannot substitute for missing evidence of the fix itself.
 
 ---
 
