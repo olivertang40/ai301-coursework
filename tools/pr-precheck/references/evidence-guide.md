@@ -66,6 +66,10 @@ Good evidence makes the target behavior observable and reports
 commands and outcomes truthfully. A visible failure or an expected
 no-tests result with its reason is evidence of what happened, not a
 claim of success; an unsupported "passes" statement is not evidence.
+For planned controls, an explicit outcome such as "unchanged" can
+support the check when the primary repro and relevant suite result
+are observable; a separate transcript for every control is not
+required.
 
 <!-- Where the PR shows its proof: the test-evidence section's
 before/after against the plan's test plan and the reproduction's own

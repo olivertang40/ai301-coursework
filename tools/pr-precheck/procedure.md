@@ -60,8 +60,11 @@ short evidence sets before grading:
 - **Test evidence:** pair each planned test/repro and expected result
   with its actual command or step, captured output, and reported
   result. Separately list repository checks required by the template
-  or policy and their outcomes. Record an honest failure or
-  no-tests-run result as evidence, not as a successful test.
+  or policy and their outcomes. For planned controls, record the
+  reported outcome; when the primary repro and relevant suite results
+  are observable, do not require a separate output transcript for each
+  control. Record an honest failure or no-tests-run result as evidence,
+  not as a successful test.
 - **Diff quality:** identify the hunks that implement the plan and
   any unrelated files/hunks, debug or generated debris, dead or
   commented-out code, or churn that obscures the behavior. Use the
