@@ -15,7 +15,13 @@ label is not graded.
 
 **Pull request**
 
-Pending — no issue-specific pull request has been opened yet.
+Not opened yet. The live precheck returned `reject` because the
+required frontend test timed out twice. The issue #73 diff is limited
+to `.env.example`, so I am not changing an unrelated frontend test.
+I tried to run the repository's GitHub Actions workflow on the branch
+for Linux CI evidence, but GitHub denied workflow dispatch with HTTP
+403 because this account does not have repository-admin rights. I am
+holding the PR until CI is green or a maintainer confirms an exception.
 
 **Branch**
 
