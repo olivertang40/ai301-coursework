@@ -16,12 +16,17 @@ label is not graded.
 **Pull request**
 
 Not opened yet. The live precheck returned `reject` because the
-required frontend test timed out twice. The issue #73 diff is limited
-to `.env.example`, so I am not changing an unrelated frontend test.
-I tried to run the repository's GitHub Actions workflow on the branch
-for Linux CI evidence, but GitHub denied workflow dispatch with HTTP
-403 because this account does not have repository-admin rights. I am
-holding the PR until CI is green or a maintainer confirms an exception.
+required frontend test timed out twice. A later `make check &&
+make test-unit` run passed (Ruff, Black with 110 files unchanged,
+mypy, and 375 unit tests passed with 53 xfailed). The issue #73 diff
+is limited to `.env.example`, so I am not changing an unrelated
+frontend test. `npm test -- --run` still times out in
+`ProfileForm > validates portfolio URL character limit`; I disclosed
+it rather than marking the CI checklist green. I tried to run the
+repository's GitHub Actions workflow on the branch for Linux CI
+evidence, but GitHub denied workflow dispatch with HTTP 403 because
+this account does not have repository-admin rights. I am holding the
+PR until CI is green or a maintainer confirms an exception.
 
 **Branch**
 
