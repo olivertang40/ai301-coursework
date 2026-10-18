@@ -19,8 +19,7 @@ Pending — no issue-specific pull request has been opened yet.
 
 **Branch**
 
-Pending — `unit4/pr-precheck-progress` is only the coursework tracking
-branch, not an issue-fix branch for Path Review.
+`fix/73-env-example-openrouter-key`
 
 ## Eval iterations
 
@@ -29,12 +28,14 @@ fields.
 
 **Run history**
 
-1. The first full run agreed on **19/20** (category floor passed); the
-   Windows console encoding error required rerunning with UTF-8 mode.
-2. Regraded `pkg-19` with `--only`: **0/1** agreed.
-3. Regraded `pkg-19,pkg-02` as the clear-accept canary run: **2/2**
+1. The first full-run attempt failed before producing results because
+   Windows decoded Claude's UTF-8 output as GBK; it has no score.
+2. Retried the full run with Python UTF-8 mode: **19/20** agreed
+   (category floor passed).
+3. Regraded `pkg-19` with `--only`: **0/1** agreed.
+4. Regraded `pkg-19,pkg-02` as the clear-accept canary run: **2/2**
    agreed.
-4. Final full confirmation: **20/20** agreed; categories were
+5. Final full confirmation: **20/20** agreed; categories were
    clear-accept 7/7, not-tested 4/4, silent-drift 4/4,
    standards-wall 2/2, unreviewable 3/3. This matches the final
    harness-generated `eval-run.txt`.

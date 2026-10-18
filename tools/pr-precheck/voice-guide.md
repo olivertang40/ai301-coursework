@@ -1,37 +1,86 @@
-# Voice guide: how I talk upstream
+﻿# Voice guide: how I talk upstream
 
 <!--
-THIS IS A CARRY-OVER SLOT, not a new hole. You wrote this guide in
-week 2 and carried it through week 3; paste your filled voice-guide.md
-here, whole. It is not re-authored and it is not graded as new work
-this week.
+THIS IS THE PART YOU WRITE (new this week). Live mode reads this file
+before any comment of yours goes out the door; eval mode ignores it
+entirely, because your voice is yours and carries no gold labels.
 
-Then reread it with the PR in mind. Your comments promised, reported,
-and committed to an approach; a PR title and description ask a
-maintainer to spend review time on your work. If your rules do not
-cover that register (for example: how a title earns its thirty
-seconds, how a description promises exactly what the diff contains,
-how a disclosed shortfall is worded so it reads as honesty rather
-than apology), extend the guide with what it needs. Extending is
-allowed and encouraged; starting over is not required.
+This is not etiquette. "Be polite and concise" is advice for everyone
+and therefore rules for no one. Write rules YOU need, in your own
+words, each one concrete enough that the skill can hold a draft
+against it and say which rule it breaks.
 
-Live mode reads this file and holds your draft PR title and
-description against it, reporting any rule your draft breaks. Eval
-mode ignores it entirely, because your voice is yours and carries no
-gold labels.
+Three sections. Fill all three.
 -->
 
 ## Who I am in threads
 
-<!-- Paste your section here. -->
+<!-- 2-3 lines. Who is talking when you comment on an issue: your
+experience level stated plainly, what you are doing in this repo, what
+readers can expect from you. This is the register your rules protect. -->
+I am a student contributor learning to make careful, reproducible bug
+reports. I will describe what I tried and what I observed, and I will
+label guesses as guesses. Maintainers can expect me to be direct about
+my limits and to follow the repository's stated process.
 
 ## Rules I write by
 
-<!-- Paste your rules here, wrong/right pairs and all. Add any rule
-the PR register needs that your comments did not. -->
+<!-- 3-5 rules, drafted from the lecture's slide-12 moment. Each rule
+needs a wrong/right pair from your own hand: one line you might
+actually have written that breaks the rule, and the line you would
+post instead. The pair is what makes a rule executable; a rule without
+one is a wish.
+
+Format each rule like this:
+
+### Rule: <short name>
+
+<The rule, one or two sentences.>
+
+- Wrong: "<a line that breaks it>"
+- Right: "<the line to post instead>"
+-->
+### Rule: Separate observation from theory
+
+I say what I saw first and mark a suspected cause as unconfirmed.
+
+- Wrong: "This is caused by a null result in the search code."
+- Right: "When I searched for `bluejay-482`, the editor pane disappeared; I have not confirmed the cause."
+
+### Rule: Bound claims to my test
+
+I report only the setup and results I personally observed; I do not turn one attempt into a claim about everyone.
+
+- Wrong: "This happens to everyone on every machine."
+- Right: "I reproduced this on Windows 11 with version 3.6.15; I have not tested other systems."
+
+### Rule: Make the contribution concrete
+
+When I claim an issue, I say what I plan to investigate or submit instead of using urgency or enthusiasm as a substitute for a next step.
+
+- Wrong: "Claiming this; someone has to fix it ASAP!"
+- Right: "I can investigate the search result handling and will post a minimal reproduction or findings before proposing a change."
+
+### Rule: Keep the report focused
+
+I include details that help reproduce or understand this issue and leave out unrelated judgments about priority or the people maintaining the project.
+
+- Wrong: "This app is unusable and this should be the top priority."
+- Right: "With the steps below, the editor pane closes when the search has no matches."
+
+### Rule: Keep PR claims tied to the diff
+
+I use a title that names the change and a description that states only what the diff and test evidence show; I call out a deviation or limitation rather than implying it was completed.
+
+- Wrong: "Fix all OpenRouter setup problems" when the diff only adds example environment variables.
+- Right: "Document OpenRouter settings in `.env.example`" and explain that the change adds the three configuration entries without changing provider behavior.
 
 ## Things I never post
 
-<!-- Paste your list here; extend it if PR descriptions tempt you
-toward new ones (claiming coverage the evidence does not show is the
-classic). -->
+<!-- A short list. Promises you cannot keep, tones you refuse,
+shortcuts you know you reach for when tired. The skill quotes this
+list back at you when a draft crosses it. -->
+- I never claim a cause unless I have evidence for it.
+- I never claim that other users or systems are affected based only on my own test.
+- I never demand a priority or deadline from maintainers.
+- I never say I will submit a fix unless I intend to do that work.
