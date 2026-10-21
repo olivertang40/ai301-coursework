@@ -55,10 +55,9 @@ happened; these entries are the toolkit's own timeline.
 All four entries are graded. Keep every heading below, and fill each
 one in the week it belongs to.
 
-**Unit 5: [one line on the tool work]**
+**Unit 5: Built and ran a Python-focused issue scout**
 
-[2-4 sentences: what you built (the scout, your strategy), what broke
-or fell short, what changed because of it.]
+I updated the existing `~/.claude/skills/issue-scout` with the Unit 5 skill files, kept the Unit 1 rubric and evidence guide, and wrote a Python fit profile with four 100-result title queries and top-five ranking filters. My first search trial returned generic documentation and onboarding issues, and the initial Claude CLI run in `dontAsk` mode could not use shell tools; switching to `auto` mode with explicit read-only GitHub commands completed the scan of 400 results, leaving 331 eligible and grading five issues (two accepted, three rejected). The scan exposed a blind spot: it accepted `xiangmaster/colin#1` even though the same author had posted an identical issue across seven repositories, so I added the author field and a deterministic same-title, multi-repository drop rule. I recorded the change in `scan-notes.md` and verified the query returns author data, but did not spend another scan credit to confirm the filter with a second full run.
 
 **Unit 6: [one line on the tool work]**
 
