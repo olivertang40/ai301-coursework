@@ -1,4 +1,4 @@
-# Contribution: [Issue Title]
+# Contribution: Add flake8 or pylint configuration
 
 Path: `beat-2-contribution/contribution-story.md`
 
@@ -8,10 +8,9 @@ format criteria grade exactly that. Your course repo link is the whole submissio
 files and no evidence uploads are part of Assignment 5.
 
 **Contribution Number:** [1]
-**Student:** [Student name]
-**GitHub Username:** [your GitHub username, exactly as it appears on your profile - no @, no
-profile URL. Your comments upstream are identified by this name.]
-**Issue:** [GitHub issue link]
+**Student:** Oliver Tang
+**GitHub Username:** olivertang40
+**Issue:** https://github.com/bleedZzzz/auctor/issues/25
 **Pull Request:** [GitHub PR link, once opened]
 
 One repository, built across units 5 to 8, telling the whole story of your real
@@ -57,13 +56,11 @@ one in the week it belongs to.
 
 **Unit 5: Built and ran a Python-focused issue scout**
 
-I updated the existing `~/.claude/skills/issue-scout` with the Unit 5 skill files, kept the Unit 1 rubric and evidence guide, and wrote a Python fit profile with four 100-result title queries and top-five ranking filters. My first search trial returned generic documentation and onboarding issues, and the initial Claude CLI run in `dontAsk` mode could not use shell tools; switching to `auto` mode with explicit read-only GitHub commands completed the scan of 400 results, leaving 331 eligible and grading five issues (two accepted, three rejected). The scan exposed a blind spot: it accepted `xiangmaster/colin#1` even though the same author had posted an identical issue across seven repositories, so I added the author field and a deterministic same-title, multi-repository drop rule. I recorded the change in `scan-notes.md` and verified the query returns author data, but did not spend another scan credit to confirm the filter with a second full run.
+I installed the Unit 5 scout over my Unit 1 skill, kept its rubric and evidence guide, and wrote a Python fit profile with four 100-result title queries and top-five ranking filters. The Oct. 21 scan left 331 of 400 results eligible; its five grades (two accepted, three rejected) exposed a blind spot when it accepted `xiangmaster/colin#1`, whose author had posted the same issue title across seven repositories. I added author data and a deterministic same-title, multi-repository exclusion, verified that `gh search issues` returns author names, and reran the scan on Oct. 27; 340 of 400 results remained after the assigned, stale, and duplicate-batch filters, although the Claude CLI attempt was blocked by permissions, so I gathered the results directly with read-only `gh` commands. Regrading also showed that the rubric could accept an issue that was already closed and merged, so I replaced `bounded-change` with `scope-feasible` and noted that I must still verify an issue is open before choosing it.
 
-**Unit 6: [one line on the tool work]**
+**Unit 6: Installed the voice guard and wrote a local AUCTOR repo memory**
 
-[2-4 sentences: the voice-guard, the repo-memory file. What broke or
-fell short, and what changed because of it. "Nothing broke" counts when
-it is true - say how you know.]
+I used the installed voice guard to check my claim draft; it stopped an early version for not grounding the question in enough specific evidence, and the revised draft passed. I copied the memory template into my AUCTOR fork, distilled its contribution rules, linting context, and test commands into `CLAUDE.local.md`, and added that filename to `.git/info/exclude`; `git status` confirms it stays out of the fork diff. The template's scaffolding and `@AGENTS.md` import were unnecessary because the repository's root `CLAUDE.md` and `AGENTS.md` are empty, so I removed them and kept only issue-specific notes.
 
 **Unit 7: [one line on the tool work]**
 
@@ -79,24 +76,16 @@ drafted, what you did with the draft.]
 
 ## Why I Chose This Issue
 
-[1-2 paragraphs in your own words: how you searched, what your scan
-surfaced, what your scout's verdict said, why this issue fits your
-profile, and what you hope to learn. If your scout's verdict on it
-was reject and you chose it anyway, say so here and say why; choosing
-against your own tool silently is what loses points. Close with an
-honest read of the tool itself: where the scout fell short on a real
-wild search and what you changed or would change, or what convinced
-you it held up. **Record the link to your claim comment in this section too.**
-Not claimed yet? Write `claim pending` and today's date where the link goes,
-and add the link the moment your claim lands.]
+My Oct. 27 Python-focused scout scan surfaced AUCTOR issue #25, “Add flake8 or pylint configuration,” and graded it **accept**. Its difficulty note was **ambitious**: the requested deliverable is one linter configuration, but the issue leaves the Flake8-versus-Pylint choice and the rule baseline open. This fits my profile's interest in Python configuration and developer-quality work, and I want to learn how to propose a useful, minimal lint baseline from an existing codebase without imposing rules the maintainer does not want. I checked the repository's contribution guide: it asks contributors to fork, use a feature branch, add tests for new functionality, run `pytest`, and submit a PR; it emphasizes minimalism, security review for protocol changes, and independent verification, with no AI-use policy stated.
+
+The scout helped me find a specific, verifiable configuration gap and called out the design question I should ask before choosing a tool. It is not a substitute for checking live repository state: an earlier regrade accepted `imgproxykit#34` after its issue had closed and its PR had merged, because the rubric lacked an open-issue check. I recorded that gap and now verify issue status directly; for #25, the live issue was open and unassigned, and there was no other claim. My claim comment is [here](https://github.com/bleedZzzz/auctor/issues/25#issuecomment-6462735667).
 
 **Toolkit**
 
-- Tool: issue-scout (your scout: your search strategy, your rubric),
-  and how you used it
-- What it produced: [the scan and its verdict on this issue, described]
-- Difficulties: [where it fell short, or "none met" if none did]
-- What changed: [what you patched or would update, or "nothing"]
+- Tool: issue-scout; I used its four Python issue queries, ranking filters, and rubric to scan candidates and grade the live issue.
+- What it produced: An `accept` verdict for AUCTOR #25, with an ambitious difficulty note identifying the undecided linter and baseline.
+- Difficulties: The scout can miss issue lifecycle changes and its scan showed weak community-response/adoption evidence; earlier it accepted a closed issue.
+- What changed: I added the repeated-title/same-author filter and replaced `bounded-change` with `scope-feasible`; until the rubric checks open state, I verify that directly before choosing.
 
 ---
 
@@ -131,31 +120,43 @@ and add the link the moment your claim lands.]
 
 **Environment Setup**
 
-[What a stranger would need to stand this up: your operating system,
-the relevant versions (language, runtime, package manager, the project
-itself), and how you set the project up. Then the challenges you faced
-and how you solved them, or that none came up.]
+I used Microsoft Windows 11 Home 64-bit (version 10.0.26300), CPython 3.11.9, and the AUCTOR fork at upstream commit `ac71b0bee8b791867b7180b159585cf03eaf2c29`. The project supports Python 3.10 or newer. From the clone root, I created an isolated environment and installed the editable project and pytest with `python -m venv .venv` and `.\.venv\Scripts\python.exe -m pip install -e . pytest`. The initial plain `pytest` attempt could not import `auctor` because the project had not been installed; installing it in the virtual environment resolved that setup issue.
 
 **Steps to Reproduce**
 
-1. [Step 1]
-2. [Step 2]
-3. [Observed result]
+1. In the clean clone at the commit above, search tracked files for linter configuration:
+
+   ```powershell
+   $matches = git ls-files | Where-Object {
+     $_ -match '(^|/)(\.flake8|\.pylintrc|pylintrc|setup\.cfg|tox\.ini)$'
+   }
+   if ($matches) { $matches } else {
+     "No tracked Flake8/Pylint configuration, setup.cfg, or tox.ini found"
+   }
+   ```
+
+2. Read the tool sections in `pyproject.toml` and check for tracked CI files:
+
+   ```powershell
+   .\.venv\Scripts\python.exe -c "import tomllib; p=tomllib.load(open('pyproject.toml','rb')); print('tool sections:', ', '.join(sorted(p.get('tool',{}))) or '(none)'); print('pytest options:', p.get('tool',{}).get('pytest',{}).get('ini_options',{}))"
+   git ls-files .github
+   ```
+
+   The only tool section is pytest (`testpaths = ["tests"]`), and the `.github` search returns no paths.
+3. Run `.\.venv\Scripts\python.exe -m pytest -q`; the suite completes with `3 passed`.
 
 **Reproduction Evidence**
 
-- **Commit showing reproduction:** [link to commit in your fork]
-- **Screenshots/logs:** [if applicable]
-- **My findings:** [what you discovered during reproduction; an
-  honest, evidenced cannot-reproduce that led you to re-pick or ask
-  the maintainer belongs here and costs you nothing]
+- **Commit showing reproduction:** none; I made no commit in the project fork.
+- **Screenshots/logs:** No screenshot. The configuration search returned no matches; parsing `pyproject.toml` printed `tool sections: pytest` and `pytest options: {'testpaths': ['tests']}`; `git ls-files .github` printed no paths; pytest reported `3 passed in 1.84s`.
+- **My findings:** At the checked commit, I confirmed the requested linter configuration is absent. The existing test suite passes after installing the project in an isolated environment. I did not add a linter or choose Flake8 versus Pylint; I asked the maintainer which direction and minimal baseline they prefer.
 
 **Toolkit**
 
-- Tool:
-- What it produced:
-- Difficulties:
-- What changed:
+- Tool: repro-check, which graded the claim and reproduction report together against the live issue, plus PowerShell/Git and pytest for direct evidence.
+- What it produced: An `accept` verdict with all seven required checks passing.
+- Difficulties: The first check run could not read skill files outside its granted paths; the next run caught an unsupported CI claim because I had not yet recorded the workflow-file check.
+- What changed: I recorded the exact Windows version, added `git ls-files .github` and its empty result, and reran the checker with explicit read access; it then accepted the package.
 
 ---
 
