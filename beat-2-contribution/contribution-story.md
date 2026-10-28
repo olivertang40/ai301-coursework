@@ -60,7 +60,7 @@ I installed the Unit 5 scout over my Unit 1 skill, kept its rubric and evidence 
 
 **Unit 6: Installed the voice guard and wrote a local AUCTOR repo memory**
 
-I used the installed voice guard to check my claim draft; it stopped an early version for not grounding the question in enough specific evidence, and the revised draft passed. I copied the memory template into my AUCTOR fork, distilled its contribution rules, linting context, and test commands into `CLAUDE.local.md`, and added that filename to `.git/info/exclude`; `git status` confirms it stays out of the fork diff. The template's scaffolding and `@AGENTS.md` import were unnecessary because the repository's root `CLAUDE.md` and `AGENTS.md` are empty, so I removed them and kept only issue-specific notes.
+I installed the voice guard as a global `PreToolUse` hook in `~/.claude/settings.json`, so Claude Code runs `check_voice.py` before Bash commands, and verified the hook stops a body-less `gh issue comment --help` call while manual checks log pass/stop results. It stopped an early claim draft because I asked a question without enough supporting evidence; I revised the comment with what I had checked, then the manual check and guarded post both passed. I distilled AUCTOR's contribution rules, linting context, and test command into a 25-line `CLAUDE.local.md` and added it to `.git/info/exclude`, which `git status` confirms keeps it out of the fork diff. The template's `@AGENTS.md` import was unnecessary because the repository's root `CLAUDE.md` and `AGENTS.md` are empty, so I removed the scaffolding and kept only issue-specific notes.
 
 **Unit 7: [one line on the tool work]**
 
