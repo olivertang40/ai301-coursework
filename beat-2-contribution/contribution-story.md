@@ -68,7 +68,7 @@ I searched the course repository and `C:\dev-fun` for `ship-manifest.md` and gat
 
 **Unit 8: Verified the PR monitor and wrote a repo-specific playbook**
 
-I ran the monitor in my AUCTOR clone on `feature/25-flake8-config`; because the fork branch had been deleted after merge, it reported `NO PR YET` instead of finding PR #33. The run drafted only a ship-gate reminder, made no Claude call, and produced no PR reply; I checked GitHub directly and confirmed #33 was merged. I set the clone's default repository to upstream and restored the PR head locally, but the monitor still could not resolve it, so I did not treat its status as authoritative or post anything. The five recent merged PRs had first maintainer activity within 34 minutes to 20 hours, so I set a three-day nudge threshold; next time I will run the monitor before the source branch is deleted.
+I ran the monitor in my AUCTOR clone on `feature/25-flake8-config`; because the fork branch had been deleted after merge, it reported `NO PR YET` instead of finding PR #33. The run drafted only a ship-gate reminder, made no Claude call, and produced no PR reply; I checked GitHub directly and confirmed #33 was merged. I set the clone's default repository to upstream and restored the PR head locally, but the monitor still could not resolve it, so I did not treat its status as authoritative or post anything. The five recent merged PRs' first maintainer activity took 34 minutes, 20 hours 1 minute, 59 minutes, 34 minutes, and 14 hours 58 minutes (#31-#35), so I set a three-day nudge threshold; next time I will run the monitor before the source branch is deleted.
 
 ---
 
@@ -181,6 +181,10 @@ Run `.\.venv\Scripts\python.exe -m pytest -q`; it passed with 3 tests. Run `.\.v
 
 ## Implementation Notes
 
+2026-10-21: Ran the initial Python scout scan across 400 results; 331 were eligible, and I graded five issues (two accepted and three rejected). The search surfaced the same issue title from one author across seven repositories, so I added author data and a same-title, multi-repository exclusion and verified that the query returned author names.
+
+2026-10-27: Reran the scan with 340 of 400 results remaining after the assigned, stale, and duplicate-batch filters. The Claude CLI attempt was blocked by permissions, so I gathered results with read-only `gh` commands; regrading also exposed a closed-and-merged issue that the rubric had accepted, so I replaced `bounded-change` with `scope-feasible` and recorded that I must check issue status directly.
+
 2026-10-28: Checked AUCTOR issue #25, verified that `pyproject.toml` had pytest settings but no linter configuration, and ran `pytest -q` (3 passed). I asked the maintainer whether to use Flake8 or Pylint; they chose Flake8 and requested a minimal standard configuration.
 
 2026-10-29: Added `.flake8` with an 88-character limit and default checks, then opened PR #33. The maintainer suggested excluding `.venv` and `venv`; I added `extend-exclude`, reran tests and root-level Flake8, and the maintainer merged the PR.
@@ -214,10 +218,10 @@ Run `.\.venv\Scripts\python.exe -m pytest -q`; it passed with 3 tests. Run `.\.v
 
 **Toolkit**
 
-- Tool: GitHub CLI to inspect PR #33 and its issue-thread feedback; PR monitor for the branch-based status check.
-- What it produced: Confirmed that PR #33 was merged on 2026-10-29 and captured the maintainer's configuration feedback.
-- Difficulties: After merge, the deleted fork branch prevented the monitor from finding the PR and it generated only a ship-gate reminder.
-- What changed: I confirmed the result directly on GitHub and recorded the monitor limitation; no message was posted.
+- Tool: The Unit 7 ship-gate and GitHub CLI; the gate manifest and report were unavailable, so I checked the PR's live history directly.
+- What it produced: No verifiable ship-gate result; GitHub confirmed PR #33 was merged on 2026-10-29 after the maintainer verified the tests and Flake8 configuration.
+- Difficulties: I could not find `ship-manifest.md` or a gate report in the course repo or `C:\dev-fun`, and the ship-gate log was absent.
+- What changed: I recorded the missing evidence rather than claiming the gate passed or inventing its commands.
 
 ---
 
