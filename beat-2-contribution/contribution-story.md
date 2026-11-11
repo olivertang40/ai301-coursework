@@ -68,7 +68,7 @@ I searched the course repository and `C:\dev-fun` for `ship-manifest.md` and gat
 
 **Unit 8: Verified the PR monitor and wrote a repo-specific playbook**
 
-I ran the monitor in my AUCTOR clone on `feature/25-flake8-config`; because the fork branch had been deleted after merge, it reported `NO PR YET` instead of finding PR #33. The run drafted only a ship-gate reminder, made no Claude call, and produced no PR reply; I checked GitHub directly and confirmed #33 was merged. I set the clone's default repository to upstream and restored the PR head locally, but the monitor still could not resolve it, so I did not treat its status as authoritative or post anything. The five recent merged PRs' first maintainer activity took 34 minutes, 20 hours 1 minute, 59 minutes, 34 minutes, and 14 hours 58 minutes (#31-#35), so I set a three-day nudge threshold; next time I will run the monitor before the source branch is deleted.
+I ran the monitor in my AUCTOR clone on `feature/25-flake8-config`, but it reported `NO PR YET` because the fork branch had been deleted after PR #33 merged. It drafted only a ship-gate reminder and made no Claude call; I verified the merge directly on GitHub and did not post the reminder. Setting the clone's default repository to upstream and restoring the PR head locally did not fix the lookup, so I recorded the limitation and will run the monitor before a branch is deleted next time. The five recent merged PRs received maintainer action within about a day, so I set a three-day nudge threshold.
 
 ---
 
